@@ -4,39 +4,37 @@ import java.util.List;
 
 public interface DownloadedCountriesContract {
 
-     interface View {
+    interface View {
 
-         void showProgressBar();
+        void showProgressBar();
 
-         void hideProgressBar();
+        void hideProgressBar();
 
-         void downloadSuccessful(List<String> china, List<String> japan, List<String> thailand,
-                               List<String> india, List<String> malaysia);
+        void downloadSuccessful(List<String> countries, List<String> china, List<String> japan,
+                                List<String> thailand, List<String> india, List<String> malaysia);
 
-         void downloadFailure(Throwable throwable);
-     }
-
-
-     interface Presenter{
-
-         void downloadCountriesList();
-
-         void onCitySelected(String city);
-
-         void onDestroy();
-     }
+        void downloadFailure(Throwable throwable);
+    }
 
 
-     interface Model{
+    interface Presenter {
 
-         interface DownloadFeedback {
+        void downloadCountriesList();
 
-             void onDownloadSuccessful(List<String> china, List<String> japan, List<String> thailand,
-                                     List<String> india, List<String> malaysia);
+        void onDestroy();
+    }
 
-             void onDownloadFailure(Throwable throwable);
-         }
 
-         void startDownloadCountriesList(DownloadFeedback feedback);
-     }
+    interface Model {
+
+        interface DownloadFeedback {
+
+            void onDownloadSuccessful(List<String> countries, List<String> china, List<String> japan,
+                                      List<String> thailand, List<String> india, List<String> malaysia);
+
+            void onDownloadFailure(Throwable throwable);
+        }
+
+        void startDownloadCountriesList(DownloadFeedback feedback);
+    }
 }

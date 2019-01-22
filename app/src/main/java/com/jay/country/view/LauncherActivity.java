@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jay.country.di.DaggerSharedPrefernciesComponent;
-import com.jay.country.di.SharedPreferenciesModule;
-import com.jay.country.model.SharedPreferencesManager;
+import com.jay.country.di.SharedPreferencesModule;
+import com.jay.country.model.sharedpreferencies.SharedPreferencesManager;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         DaggerSharedPrefernciesComponent.builder()
-                .sharedPreferenciesModule(new SharedPreferenciesModule(this))
+                .sharedPreferencesModule(new SharedPreferencesModule(this))
                 .build()
                 .inject(this);
 

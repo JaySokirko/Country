@@ -1,4 +1,4 @@
-package com.jay.country.model;
+package com.jay.country.model.sharedpreferencies;
 
 import android.content.SharedPreferences;
 

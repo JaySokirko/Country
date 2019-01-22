@@ -1,7 +1,9 @@
 package com.jay.country.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -10,22 +12,21 @@ import com.jay.country.R;
 import com.jay.country.contract.DownloadedCountriesContract;
 import com.jay.country.di.DaggerAppComponent;
 import com.jay.country.di.PresenterModule;
-import com.jay.country.di.SharedPreferenciesModule;
-import com.jay.country.model.SharedPreferencesManager;
+import com.jay.country.di.SharedPreferencesModule;
+import com.jay.country.model.adapter.CountriesAdapter;
+import com.jay.country.model.sharedpreferencies.SharedPreferencesManager;
 import com.jay.country.presenter.DownloadedCountriesPresenter;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DownloadedCountriesActivity extends AppCompatActivity implements DownloadedCountriesContract.View {
-
-    public static final String TAG = "LOG_TAG";
 
     @Inject
     DownloadedCountriesPresenter presenter;
@@ -39,8 +40,12 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
     @BindView(R.id.parent_layout)
     FrameLayout parentLayout;
 
-    @BindView(R.id.countries_recycler_view)
-    RecyclerView countriesRecyclerView;
+    @BindView(R.id.countries_expandable_list_view)
+    ExpandableListView countriesExpandableList;
+
+    CountriesAdapter countriesAdapter;
+
+    private HashMap<String, List<String>> childTitleList = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,13 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
 
         DaggerAppComponent.builder()
                 .presenterModule(new PresenterModule(this))
-                .sharedPreferenciesModule(new SharedPreferenciesModule(this))
+                .sharedPreferencesModule(new SharedPreferencesModule(this))
                 .build()
                 .inject(this);
 
         presenter.downloadCountriesList();
+
+        onCityClickListener();
     }
 
 
@@ -74,11 +81,19 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
 
 
     @Override
-    public void downloadSuccessful(List<String> china, List<String> japan, List<String> thailand,
-                                   List<String> india, List<String> malaysia) {
+    public void downloadSuccessful(List<String> countries, List<String> china, List<String> japan,
+                                   List<String> thailand, List<String> india, List<String> malaysia) {
 
+        childTitleList.put(countries.get(0), china);
+        childTitleList.put(countries.get(1), japan);
+        childTitleList.put(countries.get(2), thailand);
+        childTitleList.put(countries.get(3), india);
+        childTitleList.put(countries.get(4), malaysia);
 
-        //todo putBoolean
+        countriesAdapter = new CountriesAdapter(countries, childTitleList, this);
+        countriesExpandableList.setAdapter(countriesAdapter);
+
+        countriesAdapter.notifyDataSetChanged();
     }
 
 
@@ -86,5 +101,26 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
     public void downloadFailure(Throwable throwable) {
 
         Snackbar.make(parentLayout, throwable.getMessage(), Snackbar.LENGTH_LONG).show();
+    }
+
+
+    void onCityClickListener(){
+
+        countriesExpandableList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+
+            String city = countriesAdapter.getCity(groupPosition, childPosition);
+
+            startActivity(new Intent(this, CityDetailedActivity.class)
+                    .putExtra("city", city));
+
+            return false;
+        });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

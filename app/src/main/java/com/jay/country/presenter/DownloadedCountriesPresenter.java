@@ -10,9 +10,9 @@ import javax.inject.Inject;
 public class DownloadedCountriesPresenter implements DownloadedCountriesContract.Presenter,
         DownloadedCountriesContract.Model.DownloadFeedback {
 
-    DownloadedCountriesContract.View view;
+    private DownloadedCountriesContract.View view;
 
-    DownloadedCountriesContract.Model model = new CountriesDownloader();
+    private DownloadedCountriesContract.Model model = new CountriesDownloader();
 
     @Inject
     public DownloadedCountriesPresenter(DownloadedCountriesContract.View view) {
@@ -33,16 +33,6 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
 
 
     @Override
-    public void onCitySelected(String city) {
-
-        if (view != null) {
-
-            //todo start detailed screen
-        }
-    }
-
-
-    @Override
     public void onDestroy() {
 
         view = null;
@@ -51,19 +41,12 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
 
 
     @Override
-    public void onDownloadSuccessful(List<String> china, List<String> japan, List<String> thailand,
-                                     List<String> india, List<String> malaysia) {
-
+    public void onDownloadSuccessful(List<String> countries, List<String> china, List<String> japan,
+                                     List<String> thailand, List<String> india, List<String> malaysia) {
         if (view != null) {
 
-            view.downloadSuccessful(china, japan, thailand, india, malaysia);
+            view.downloadSuccessful(countries, china, japan, thailand, india, malaysia);
             view.hideProgressBar();
-
-            china.clear();
-            japan.clear();
-            thailand.clear();
-            india.clear();
-            malaysia.clear();
         }
     }
 

@@ -28,6 +28,16 @@ public class Countries {
     @Expose
     private List<String> malaysia = new ArrayList<>();
 
+    private static ArrayList<String> countries = new ArrayList<>();
+
+    public static ArrayList<String> getCountries() {
+        countries.add("China");
+        countries.add("Japan");
+        countries.add("Thailand");
+        countries.add("India");
+        countries.add("Malaysia");
+        return countries;
+    }
 
     public List<String> getChina() {
         return china;

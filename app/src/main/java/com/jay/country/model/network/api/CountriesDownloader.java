@@ -10,9 +10,11 @@ import retrofit2.Retrofit;
 
 public class CountriesDownloader implements DownloadedCountriesContract.Model {
 
-    private Retrofit retrofit = ApiClient.getRetrofitClient();
+    private final String baseURL = "https://raw.githubusercontent.com/";
+
+    private Retrofit retrofit = ApiClient.getRetrofitClient(baseURL);
     private ApiService apiService = retrofit.create(ApiService.class);
-    
+
     @Override
     public void startDownloadCountriesList(DownloadFeedback feedback) {
 
@@ -21,9 +23,9 @@ public class CountriesDownloader implements DownloadedCountriesContract.Model {
             @Override
             public void onResponse(Call<Countries> call, Response<Countries> response) {
 
-                if (response.body() != null){
+                if (response.body() != null) {
 
-                    feedback.onDownloadSuccessful(response.body().getChina(),
+                    feedback.onDownloadSuccessful(Countries.getCountries(), response.body().getChina(),
                             response.body().getJapan(), response.body().getThailand(),
                             response.body().getIndia(), response.body().getMalaysia());
                 }
