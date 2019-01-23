@@ -1,6 +1,7 @@
 package com.jay.country.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -16,6 +17,8 @@ import com.jay.country.R;
 import com.jay.country.contract.CityDetailedContract;
 import com.jay.country.presenter.CityDetailedPresenter;
 
+import java.util.List;
+
 public class CityDetailedActivity extends AppCompatActivity implements CityDetailedContract.View {
 
     private String TAG = CityDetailedActivity.class.getName();
@@ -23,8 +26,8 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    @BindView(R.id.article)
-    TextView articleTextView;
+    @BindView(R.id.recycler_view_article)
+    RecyclerView articleRecyclerView;
 
     @BindView(R.id.parent_layout)
     FrameLayout parentLayout;
@@ -61,9 +64,9 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
 
 
     @Override
-    public void onLoadArticleSuccessful(String article) {
+    public void onLoadArticleSuccessful(List<String> articleList, List<String> imageUtlList) {
 
-        articleTextView.setText(article);
+
     }
 
 

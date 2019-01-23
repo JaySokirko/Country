@@ -3,6 +3,8 @@ package com.jay.country.presenter;
 import com.jay.country.contract.CityDetailedContract;
 import com.jay.country.model.network.api.CityDownloader;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 public class CityDetailedPresenter implements CityDetailedContract.Presenter,
@@ -40,11 +42,11 @@ public class CityDetailedPresenter implements CityDetailedContract.Presenter,
 
 
     @Override
-    public void onLoadSuccessful(String article) {
+    public void onLoadSuccessful(List<String> articleList, List<String> imageUtlList) {
 
         if (view != null){
 
-            view.onLoadArticleSuccessful(article);
+            view.onLoadArticleSuccessful(articleList, imageUtlList);
             view.hideProgressBar();
         }
     }

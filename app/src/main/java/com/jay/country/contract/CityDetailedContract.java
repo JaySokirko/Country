@@ -1,5 +1,7 @@
 package com.jay.country.contract;
 
+import java.util.List;
+
 public interface CityDetailedContract {
 
     interface View{
@@ -8,7 +10,7 @@ public interface CityDetailedContract {
 
         void hideProgressBar();
 
-        void onLoadArticleSuccessful(String article);
+        void onLoadArticleSuccessful(List<String> articleList, List<String> imageUtlList);
 
         void onLoadArticleFailure(Throwable throwable);
     }
@@ -26,7 +28,7 @@ public interface CityDetailedContract {
 
         interface LoadFeedback{
 
-            void onLoadSuccessful(String article);
+            void onLoadSuccessful(List<String> articleList, List<String> imageUtlList);
 
             void onLoadFailure(Throwable throwable);
         }
