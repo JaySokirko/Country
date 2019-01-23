@@ -1,5 +1,7 @@
 package com.jay.country.contract;
 
+import android.content.Context;
+
 import java.util.List;
 
 public interface DownloadedCountriesContract {
@@ -14,12 +16,19 @@ public interface DownloadedCountriesContract {
                                 List<String> thailand, List<String> india, List<String> malaysia);
 
         void downloadFailure(Throwable throwable);
+
+        void successfulSaveIntoDatabase();
+
+        void failureSaveIntoDatabase(Throwable throwable);
     }
 
 
     interface Presenter {
 
         void downloadCountriesList();
+
+        void saveIntoDatabase(Context context, List<String> countries, List<String> china, List<String> japan,
+                              List<String> thailand, List<String> india, List<String> malaysia);
 
         void onDestroy();
     }

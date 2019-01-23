@@ -10,9 +10,9 @@ import android.widget.ProgressBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.jay.country.R;
 import com.jay.country.contract.DownloadedCountriesContract;
-import com.jay.country.di.DaggerAppComponent;
-import com.jay.country.di.PresenterModule;
-import com.jay.country.di.SharedPreferencesModule;
+import com.jay.country.di.component.DaggerAppComponent;
+import com.jay.country.di.module.PresenterModule;
+import com.jay.country.di.module.SharedPreferencesModule;
 import com.jay.country.model.adapter.CountriesAdapter;
 import com.jay.country.model.sharedpreferencies.SharedPreferencesManager;
 import com.jay.country.presenter.DownloadedCountriesPresenter;
@@ -94,6 +94,8 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
         countriesExpandableList.setAdapter(countriesAdapter);
 
         countriesAdapter.notifyDataSetChanged();
+
+        presenter.saveIntoDatabase(this, countries, china, japan, thailand, india, malaysia);
     }
 
 
@@ -104,7 +106,24 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
     }
 
 
-    void onCityClickListener(){
+    @Override
+    public void successfulSaveIntoDatabase() {
+
+        preferencesManager.putBoolean("downloadSuccess", true);
+
+        Snackbar.make(parentLayout, getResources().getString(R.string.saving_successful),
+                Snackbar.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void failureSaveIntoDatabase(Throwable throwable) {
+
+        Snackbar.make(parentLayout, throwable.getMessage(), Snackbar.LENGTH_LONG).show();
+    }
+
+
+    void onCityClickListener() {
 
         countriesExpandableList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
 

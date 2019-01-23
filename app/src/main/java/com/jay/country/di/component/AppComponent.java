@@ -1,5 +1,7 @@
-package com.jay.country.di;
+package com.jay.country.di.component;
 
+import com.jay.country.di.module.PresenterModule;
+import com.jay.country.di.module.SharedPreferencesModule;
 import com.jay.country.view.DownloadedCountriesActivity;
 
 import dagger.Component;

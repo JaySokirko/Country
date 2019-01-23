@@ -1,15 +1,15 @@
 package com.jay.country.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.jay.country.di.DaggerSharedPrefernciesComponent;
-import com.jay.country.di.SharedPreferencesModule;
+import com.jay.country.di.component.DaggerSharedPreferencesComponent;
+import com.jay.country.di.module.SharedPreferencesModule;
 import com.jay.country.model.sharedpreferencies.SharedPreferencesManager;
 
 import javax.inject.Inject;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -21,15 +21,20 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DaggerSharedPrefernciesComponent.builder()
+        DaggerSharedPreferencesComponent.builder()
                 .sharedPreferencesModule(new SharedPreferencesModule(this))
                 .build()
                 .inject(this);
 
         //todo isCountriesAlreadyDownloaded
+        boolean isDataAlreadyDownloaded = preferencesManager.getBoolean("downloadSuccess");
 
-        startActivity(new Intent(this, DownloadedCountriesActivity.class));
+        if (isDataAlreadyDownloaded) {
 
+            startActivity(new Intent(this, RestoredCountriesActivity.class));
+        } else {
+            startActivity(new Intent(this, DownloadedCountriesActivity.class));
+        }
         finish();
     }
 }

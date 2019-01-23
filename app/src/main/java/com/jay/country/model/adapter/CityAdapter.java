@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jay.country.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -47,6 +48,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CityAdapter.ViewHolder holder, int position) {
 
+        holder.articleTextView.setText(articleList.get(position));
+
+        if (imageList.get(position) != null){
+
+            Picasso.get().load(imageList.get(position)).into(holder.articleImageView);
+        }
     }
 
 
@@ -57,7 +64,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.article)
         TextView articleTextView;
@@ -65,7 +72,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         @BindView(R.id.article_image)
         ImageView articleImageView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

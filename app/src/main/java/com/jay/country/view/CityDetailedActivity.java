@@ -1,6 +1,7 @@
 package com.jay.country.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.jay.country.R;
 import com.jay.country.contract.CityDetailedContract;
+import com.jay.country.model.adapter.CityAdapter;
 import com.jay.country.presenter.CityDetailedPresenter;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     @BindView(R.id.parent_layout)
     FrameLayout parentLayout;
 
+    private CityAdapter cityAdapter;
 
     CityDetailedPresenter presenter;
 
@@ -41,6 +44,8 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
         setContentView(R.layout.activity_detailed);
 
         ButterKnife.bind(this);
+
+        articleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         String city = getIntent().getStringExtra("city");
 
@@ -66,7 +71,10 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     @Override
     public void onLoadArticleSuccessful(List<String> articleList, List<String> imageUtlList) {
 
+        cityAdapter = new CityAdapter(articleList, imageUtlList, this);
+        articleRecyclerView.setAdapter(cityAdapter);
 
+        cityAdapter.notifyDataSetChanged();
     }
 
 

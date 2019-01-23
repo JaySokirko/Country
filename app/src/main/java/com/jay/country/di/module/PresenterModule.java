@@ -1,4 +1,4 @@
-package com.jay.country.di;
+package com.jay.country.di.module;
 
 import com.jay.country.contract.DownloadedCountriesContract;
 

@@ -1,6 +1,10 @@
 package com.jay.country.presenter;
 
+import android.content.Context;
+
 import com.jay.country.contract.DownloadedCountriesContract;
+import com.jay.country.contract.RestoredCountriesContract;
+import com.jay.country.model.database.DataBaseTransaction;
 import com.jay.country.model.network.api.CountriesDownloader;
 
 import java.util.List;
@@ -8,11 +12,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class DownloadedCountriesPresenter implements DownloadedCountriesContract.Presenter,
-        DownloadedCountriesContract.Model.DownloadFeedback {
+        DownloadedCountriesContract.Model.DownloadFeedback,
+        RestoredCountriesContract.Model.DatabaseTransactor.DataBaseInferFeedback {
 
     private DownloadedCountriesContract.View view;
 
     private DownloadedCountriesContract.Model model = new CountriesDownloader();
+
+    private RestoredCountriesContract.Model.DatabaseTransactor databaseTransactor = new DataBaseTransaction();
 
     @Inject
     public DownloadedCountriesPresenter(DownloadedCountriesContract.View view) {
@@ -33,6 +40,17 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
 
 
     @Override
+    public void saveIntoDatabase(Context context, List<String> countries, List<String> china, List<String> japan,
+                                 List<String> thailand, List<String> india, List<String> malaysia) {
+
+        if (view != null) {
+            databaseTransactor.insertIntoDataBase(context, this, countries, china, japan,
+                    thailand, india, malaysia);
+        }
+    }
+
+
+    @Override
     public void onDestroy() {
 
         view = null;
@@ -44,9 +62,7 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
     public void onDownloadSuccessful(List<String> countries, List<String> china, List<String> japan,
                                      List<String> thailand, List<String> india, List<String> malaysia) {
         if (view != null) {
-
             view.downloadSuccessful(countries, china, japan, thailand, india, malaysia);
-            view.hideProgressBar();
         }
     }
 
@@ -58,6 +74,28 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
 
             view.downloadFailure(throwable);
             view.hideProgressBar();
+        }
+    }
+
+
+    @Override
+    public void onSaveIntoDataBaseFinish() {
+
+        if (view != null){
+
+            view.hideProgressBar();
+            view.successfulSaveIntoDatabase();
+        }
+    }
+
+
+    @Override
+    public void onFailureSaveIntoDatabase(Throwable throwable) {
+
+        if (view != null){
+
+            view.hideProgressBar();
+            view.failureSaveIntoDatabase(throwable);
         }
     }
 }
