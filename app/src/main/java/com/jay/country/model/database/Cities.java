@@ -1,10 +1,5 @@
 package com.jay.country.model.database;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -63,39 +58,19 @@ public class Cities {
         return china;
     }
 
-    public void setChina(String china) {
-        this.china = china;
-    }
-
     String getJapan() {
         return japan;
-    }
-
-    public void setJapan(String japan) {
-        this.japan = japan;
     }
 
     String getThailand() {
         return thailand;
     }
 
-    public void setThailand(String thailand) {
-        this.thailand = thailand;
-    }
-
     String getIndia() {
         return india;
     }
 
-    public void setIndia(String india) {
-        this.india = india;
-    }
-
     String getMalaysia() {
         return malaysia;
-    }
-
-    public void setMalaysia(String malaysia) {
-        this.malaysia = malaysia;
     }
 }

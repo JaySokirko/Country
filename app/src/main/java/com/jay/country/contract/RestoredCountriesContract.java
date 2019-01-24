@@ -8,27 +8,40 @@ public interface RestoredCountriesContract {
 
     interface View {
 
+        void hideProgressBarr();
+
+        void showProgressBar();
+
+        void onGetDataSuccessful( List<String> countries, List<String> china, List<String> japan,
+                                  List<String> thailand, List<String> india, List<String> malaysia);
+
+        void onGetDataFailure(String error);
     }
+
 
 
     interface Presenter {
 
+        void getDataFromDatabase(Context context);
+
+        void onDestroy();
+
     }
+
 
 
     interface Model {
 
-        interface DatabaseTransactor {
+        interface DatabaseTransaction {
 
-            void insertIntoDataBase(Context context, DataBaseInferFeedback feedback,
+            void insertIntoDataBase(Context context, DatabaseInsertFeedback feedback,
                                     List<String> countries, List<String> china,
                                     List<String> japan, List<String> thailand, List<String> india,
                                     List<String> malaysia);
 
-            void restoreFromDataBase();
+            void restoreFromDataBase(Context context, DatabaseRestoreFeedback feedback);
 
-
-            interface DataBaseInferFeedback {
+            interface DatabaseInsertFeedback {
 
                 void onSaveIntoDataBaseFinish();
 
@@ -36,12 +49,13 @@ public interface RestoredCountriesContract {
             }
 
 
-            interface DataBaseRestoreFeedback {
+            interface DatabaseRestoreFeedback {
 
-                void onRestoreFromDatabaseSuccessful(Context context,
-                                                     List<String> countries, List<String> china,
+                void onRestoreFromDatabaseSuccessful(List<String> countries, List<String> china,
                                                      List<String> japan, List<String> thailand,
                                                      List<String> india, List<String> malaysia);
+
+                void onRestoreFromDatabaseFailure(String error);
             }
         }
     }

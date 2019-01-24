@@ -19,8 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.RestoredCountriesActivity"></activity>
-        <!--  -->
+
+        <!---->
+        <activity android:name=".view.RestoredCountriesActivity" />
+        <!-- -->
+
+        <!---->
         <activity android:name=".view.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +32,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!--  -->
-        <activity android:name=".view.CityDetailedActivity" /> <!--  -->
-        <activity android:name=".view.DownloadedCountriesActivity" />
+        </activity>
+        <!---->
+
+        <!---->
+        <activity android:name=".view.CityDetailedActivity"
+            android:label="@string/City_detailed"/>
+        <!---->
+
+        <!---->
+        <activity android:name=".view.DownloadCountriesActivity" />
+        <!---->
     </application>
 
 </manifest>

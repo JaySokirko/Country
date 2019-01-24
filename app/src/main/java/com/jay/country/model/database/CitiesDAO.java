@@ -13,9 +13,6 @@ public interface CitiesDAO {
     @Query("SELECT * FROM cities")
     Flowable<List<Cities>> getAllCities();
 
-    @Query("DELETE FROM cities")
-    void deleteAll();
-
     @Insert
     void insert(Cities cities);
 }

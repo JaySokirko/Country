@@ -26,14 +26,13 @@ public class LauncherActivity extends AppCompatActivity {
                 .build()
                 .inject(this);
 
-        //todo isCountriesAlreadyDownloaded
         boolean isDataAlreadyDownloaded = preferencesManager.getBoolean("downloadSuccess");
 
         if (isDataAlreadyDownloaded) {
 
             startActivity(new Intent(this, RestoredCountriesActivity.class));
         } else {
-            startActivity(new Intent(this, DownloadedCountriesActivity.class));
+            startActivity(new Intent(this, DownloadCountriesActivity.class));
         }
         finish();
     }

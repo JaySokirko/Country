@@ -13,13 +13,13 @@ import javax.inject.Inject;
 
 public class DownloadedCountriesPresenter implements DownloadedCountriesContract.Presenter,
         DownloadedCountriesContract.Model.DownloadFeedback,
-        RestoredCountriesContract.Model.DatabaseTransactor.DataBaseInferFeedback {
+        RestoredCountriesContract.Model.DatabaseTransaction.DatabaseInsertFeedback {
 
     private DownloadedCountriesContract.View view;
 
     private DownloadedCountriesContract.Model model = new CountriesDownloader();
 
-    private RestoredCountriesContract.Model.DatabaseTransactor databaseTransactor = new DataBaseTransaction();
+    private RestoredCountriesContract.Model.DatabaseTransaction databaseTransaction = new DataBaseTransaction();
 
     @Inject
     public DownloadedCountriesPresenter(DownloadedCountriesContract.View view) {
@@ -44,7 +44,7 @@ public class DownloadedCountriesPresenter implements DownloadedCountriesContract
                                  List<String> thailand, List<String> india, List<String> malaysia) {
 
         if (view != null) {
-            databaseTransactor.insertIntoDataBase(context, this, countries, china, japan,
+            databaseTransaction.insertIntoDataBase(context, this, countries, china, japan,
                     thailand, india, malaysia);
         }
     }

@@ -22,14 +22,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     private List<String> articleList;
     private List<String> imageList;
 
-    private Context context;
-
     private LayoutInflater layoutInflater;
 
     public CityAdapter(List<String> articleList, List<String> imageList, Context context) {
         this.articleList = articleList;
         this.imageList = imageList;
-        this.context = context;
 
         layoutInflater = LayoutInflater.from(context);
     }

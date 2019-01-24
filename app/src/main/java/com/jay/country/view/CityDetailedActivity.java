@@ -16,14 +16,17 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.jay.country.R;
 import com.jay.country.contract.CityDetailedContract;
+import com.jay.country.di.component.DaggerAppComponent;
+import com.jay.country.di.module.PresenterModule;
+import com.jay.country.di.module.SharedPreferencesModule;
 import com.jay.country.model.adapter.CityAdapter;
 import com.jay.country.presenter.CityDetailedPresenter;
 
 import java.util.List;
 
-public class CityDetailedActivity extends AppCompatActivity implements CityDetailedContract.View {
+import javax.inject.Inject;
 
-    private String TAG = CityDetailedActivity.class.getName();
+public class CityDetailedActivity extends AppCompatActivity implements CityDetailedContract.View {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -34,8 +37,7 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     @BindView(R.id.parent_layout)
     FrameLayout parentLayout;
 
-    private CityAdapter cityAdapter;
-
+    @Inject
     CityDetailedPresenter presenter;
 
     @Override
@@ -45,11 +47,16 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
 
         ButterKnife.bind(this);
 
+        DaggerAppComponent.builder()
+                .sharedPreferencesModule(new SharedPreferencesModule(this))
+                .presenterModule(new PresenterModule(this))
+                .build()
+                .inject(this);
+
         articleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         String city = getIntent().getStringExtra("city");
 
-        presenter = new CityDetailedPresenter(this);
         presenter.loadArticle(city);
     }
 
@@ -71,7 +78,7 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     @Override
     public void onLoadArticleSuccessful(List<String> articleList, List<String> imageUtlList) {
 
-        cityAdapter = new CityAdapter(articleList, imageUtlList, this);
+        CityAdapter cityAdapter = new CityAdapter(articleList, imageUtlList, this);
         articleRecyclerView.setAdapter(cityAdapter);
 
         cityAdapter.notifyDataSetChanged();
@@ -82,5 +89,12 @@ public class CityDetailedActivity extends AppCompatActivity implements CityDetai
     public void onLoadArticleFailure(Throwable throwable) {
 
         Snackbar.make(parentLayout, throwable.getMessage(), Snackbar.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

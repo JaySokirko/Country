@@ -18,7 +18,7 @@ public abstract class CitiesDatabase extends RoomDatabase {
 
     public abstract CitiesDAO citiesDAO();
 
-    public static CitiesDatabase getInstance(Context context) {
+    static CitiesDatabase getInstance(Context context) {
 
         if (citiesDataBase == null){
 

@@ -15,8 +15,4 @@ public class Cities {
     public List<City> getGeonames() {
         return geonames;
     }
-
-    public void setGeonames(List<City> geonames) {
-        this.geonames = geonames;
-    }
 }

@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DownloadedCountriesActivity extends AppCompatActivity implements DownloadedCountriesContract.View {
+public class DownloadCountriesActivity extends AppCompatActivity implements DownloadedCountriesContract.View {
 
     @Inject
     DownloadedCountriesPresenter presenter;
@@ -50,7 +50,7 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_download_countries);
 
         ButterKnife.bind(this);
 
@@ -59,6 +59,7 @@ public class DownloadedCountriesActivity extends AppCompatActivity implements Do
                 .sharedPreferencesModule(new SharedPreferencesModule(this))
                 .build()
                 .inject(this);
+
 
         presenter.downloadCountriesList();
 
