@@ -1,12 +1,7 @@
 package com.jay.country.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -26,6 +21,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
+/**
+ * If countries are already loaded, then take them from the database.
+ */
 public class RestoredCountriesActivity extends AppCompatActivity implements RestoredCountriesContract.View {
 
     @BindView(R.id.parent_layout)

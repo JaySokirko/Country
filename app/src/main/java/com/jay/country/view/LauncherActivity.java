@@ -28,6 +28,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         boolean isDataAlreadyDownloaded = preferencesManager.getBoolean("downloadSuccess");
 
+        //Check whether the list of countries has already been downloaded
         if (isDataAlreadyDownloaded) {
 
             startActivity(new Intent(this, RestoredCountriesActivity.class));
